@@ -40,9 +40,37 @@ getUser = async(req, res)=>{
             })
         }
         if(!users.length) {
-            return res.status(404).json({success:false,message:'no movie found'})
+            return res.status(404).json({success:false,message:'no user found'})
         }
         return res.status(200).json({success:true,data:users})
     }).catch(e=>{console.log(e)})
 }
-module.exports = {createUser,getUser};
+validate = async(req, res) => {
+    console.log(req)
+    await usermodel.find({},(err,users)=>{
+        if(!users.length){
+            return res.status(404).json({success:false,message:'no user found'})            
+        } else{
+            let result = users.filter((u)=>{
+                if(u.name === req.body.uname && u.password === req.body.pass) {
+                    return true
+                } else{
+                    return false
+                }
+            })
+            if(result.length) {
+                return res.status(200).json({
+                    success: true,
+                    message:'Valid user'
+                })
+            } else{
+                return res.status(500).json({
+                    success: false,
+                    message:'inValid user'
+                })
+            }
+        }
+    })
+    
+}
+module.exports = {createUser,getUser,validate};
