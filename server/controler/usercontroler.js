@@ -29,7 +29,7 @@ createUser = (req, res) =>{
                 e,
                 message:'user not created'
             })
-    })
+        })
 }
 getUser = async(req, res)=>{
     await usermodel.find({},(err,users)=>{
@@ -48,6 +48,7 @@ getUser = async(req, res)=>{
 validate = async(req, res) => {
     console.log(req)
     await usermodel.find({},(err,users)=>{
+        console.log(users)
         if(!users.length){
             return res.status(404).json({success:false,message:'no user found'})            
         } else{

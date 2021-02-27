@@ -1,26 +1,28 @@
 import './App.css';
 import React,{useState } from 'react'
-import api from "./api/api"
+import {Login} from './components/Login'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 function App() {
-  function login(e) {
-    e.preventDefault()
-    console.log(name,pass)
-    new api().checkValid({uname:name,pass: pass},(res)=>{
-      if(res.message === 'Valid user'){
-        alert(`Hey ${name} you are a valid user`)
-      } else {
-        alert('Try again with valid credentials')
-      }
-    })
-  }
-  const [name,setName] = useState('')
-  const [pass,setPass] = useState('')
   return (
-    <div className="App">
-      <input type="text" name='username' value={name} onChange={(e)=>{setName(e.target.value)}}/>
-      <input type='password' name='password' value={pass} onChange={(e)=>{setPass(e.target.value)}}/>
-      <button onClick={(e)=>{login(e)}}>login</button>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+            <Route path="/dashboard">
+              <h1>dashboard compponent will flow here</h1>
+            </Route>
+            <Route path="/users">
+              {/* <Users /> */}
+            </Route>
+            <Route path="/">
+              <Login />
+            </Route>
+          </Switch>
+      </div>
+    </Router>
   );
 }
 
